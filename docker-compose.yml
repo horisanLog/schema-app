@@ -1,0 +1,86 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./backend/db/mysql_data:/var/lib/mysql
+    ports:
+      - 3301:3306
+
+  backend:
+    build:
+      context: ./backend
+      args:
+        WORKDIR: app
+      dockerfile: Dockerfile
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - "./backend:/app"
+    environment:
+      TZ: Asia/Tokyo
+      RAILS_ENV: development
+      API_DOMAIN: "localhost:8000"
+      BASE_URL: "http://localhost:3000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  swagger-merger:
+    build:
+      context: ./swagger-merger
+      dockerfile: Dockerfile
+    working_dir: "/swagger-merger"
+    volumes:
+      - "./swagger-merger:/swagger-merger"
+  redoc:
+    image: redocly/redoc:latest
+    ports:
+      - "8081:80"
+    volumes:
+      - "./swagger-merger:/usr/share/nginx/html/swagger-merger"
+    environment:
+      SPEC_URL: ./swagger-merger/src/swagger.yml
+  
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "8002:8080"
+    volumes:
+      - "./swagger-merger/src/swagger.yml:/usr/share/nginx/html/swagger-merger/src/swagger.yml"
+    environment:
+      API_URL: ./swagger-merger/src/swagger.yml
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        WORKDIR: app
+        API_URL: "http://localhost:3000"
+      dockerfile: Dockerfile
+    command: sh -c 'npm install && npm run start'
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Hot Reload を有効にする
+    volumes:
+      - "./frontend:/frontend"
+    ports:
+      - "8000:3000"
+    tty: true
+    depends_on:
+      - backend
+
+  openapi_typescript_axios:
+    image: openapitools/openapi-generator-cli:v6.0.1
+    volumes:
+      - "./frontend:/frontend"
+    command: generate -i ./swagger-merger/src/swagger.yml -g typescript-axios -o ./frontend/src/types
+    depends_on:
+      - frontend
+      - swagger-ui
+      - swagger-merger

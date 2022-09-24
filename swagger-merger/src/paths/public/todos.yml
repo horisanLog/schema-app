@@ -1,0 +1,12 @@
+get:
+  tags:
+    - public
+  summary: "todoの取得"
+  description: "todoを取得する"
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Public.Todo"

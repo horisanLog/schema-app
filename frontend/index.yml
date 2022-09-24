@@ -1,0 +1,21 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: swagger
+  contact:
+    name: swagger
+    url: 'https://example:com'
+    email: ttie7374@gmail.co.jp
+
+servers:
+  - url: http://localhost:8081/
+
+tags:
+  - name: public
+    description: 公開
+
+components:
+  $ref: './components/index.yml'
+
+paths:
+  $ref: './paths/index.yml'

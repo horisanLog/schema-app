@@ -1,0 +1,12 @@
+{
+  "name": "swagger-merger",
+  "version": "1.0.0",
+  "description": "swagger-merger",
+  "scripts": {
+    "merge": "swagger-merger --debug -i ./src/index.yml -o ./src/swagger.yml",
+    "watch": "gulp"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2"
+  }
+}

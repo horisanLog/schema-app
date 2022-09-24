@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: swagger
+  contact:
+    name: swagger
+    email: ttie7374@gmail.co.jp
+servers:
+  - url: http://localhost:8081/
+tags:
+  - name: public
+    description: 公開
+paths:
+  /public/todos:
+    get:
+      tags:
+        - public
+      summary: todoの取得
+      description: todoを取得する
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Public.Todo'
+components:
+  schemas:
+    Public.Todo:
+      type: object
+      description: Todo
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: やることリスト
