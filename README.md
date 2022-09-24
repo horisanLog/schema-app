@@ -1,4 +1,4 @@
-# OpenAPIを定義し、型を自動生成できる環境を構築
+# OpenAPIを定義し、型をインタラクティブに自動生成
 
 ## swagger-merger
 複数のswaggerファイルを1つのswaggerファイルに統合してくれる
