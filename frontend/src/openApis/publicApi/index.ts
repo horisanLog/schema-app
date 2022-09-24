@@ -16,7 +16,6 @@ const config = new Configuration({
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
-  // withCredentials: true,
   responseType: "json"
 });
 
