@@ -61,7 +61,7 @@ $ openapi-generator-cli version-manager set 5.3.0
 $ cd frontend
 
 ※ 初めて実行する人
-openApis直下のファイルが自動生成するか確かめるために、openApis直下(openApis/publicApi/index.tsは残す)は削除して以下を実行してください
+openApis直下のファイルが自動生成するか確かめるために、openApis直下(openApis/publicApi/index.tsは残す)は削除して以下を実行する
 
 $ npm run api:generate
 → openApisののファイルが生成されれば、成功
