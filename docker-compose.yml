@@ -31,21 +31,22 @@ services:
     depends_on:
       - db
 
-  swagger-merger:
+  swagger:
     build:
-      context: ./swagger-merger
+      context: ./swagger
       dockerfile: Dockerfile
-    working_dir: "/swagger-merger"
+    working_dir: "/swagger"
     volumes:
-      - "./swagger-merger:/swagger-merger"
+      - "./swagger:/swagger"
+
   redoc:
     image: redocly/redoc:latest
     ports:
       - "8081:80"
     volumes:
-      - "./swagger-merger:/usr/share/nginx/html/swagger-merger"
+      - "./swagger:/usr/share/nginx/html/swagger"
     environment:
-      SPEC_URL: ./swagger-merger/src/swagger.yml
+      SPEC_URL: ./swagger/src/swagger.yml
   
   swagger-ui:
     image: swaggerapi/swagger-ui
@@ -53,9 +54,9 @@ services:
     ports:
       - "8002:8080"
     volumes:
-      - "./swagger-merger/src/swagger.yml:/usr/share/nginx/html/swagger-merger/src/swagger.yml"
+      - "./swagger/src/swagger.yml:/usr/share/nginx/html/swagger/src/swagger.yml"
     environment:
-      API_URL: ./swagger-merger/src/swagger.yml
+      API_URL: ./swagger/src/swagger.yml
 
   frontend:
     build:
@@ -79,8 +80,8 @@ services:
     image: openapitools/openapi-generator-cli:v6.0.1
     volumes:
       - "./frontend:/frontend"
-    command: generate -i ./swagger-merger/src/swagger.yml -g typescript-axios -o ./frontend/src/types
+    command: generate -i ./swagger/src/swagger.yml -g typescript-axios -o ./frontend/src/types
     depends_on:
       - frontend
       - swagger-ui
-      - swagger-merger
+      - swagger

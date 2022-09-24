@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :todos, only: [:index]
+    namespace :public do
+      resources :todos, only: [:index]
+    end
   end
 end

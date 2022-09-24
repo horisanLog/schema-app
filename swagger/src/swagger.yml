@@ -6,7 +6,7 @@ info:
     name: swagger
     email: ttie7374@gmail.co.jp
 servers:
-  - url: http://localhost:8081/
+  - url: http://localhost:3000/api
 tags:
   - name: public
     description: 公開
@@ -39,4 +39,4 @@ components:
           example: 1
         name:
           type: string
-          example: やることリスト
+          example: リスト
