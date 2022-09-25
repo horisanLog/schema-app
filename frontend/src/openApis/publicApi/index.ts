@@ -1,26 +1,18 @@
+import { PublicApi } from '../api/public-api'
 
+import { Configuration } from '../configuration'
 
-import {
-  PublicApi,
-} from '../api/public-api';
+import axios from 'axios'
 
-import { Configuration } from '../configuration';
-
-import axios from 'axios';
-
-const API_URL = "http://localhost:3000/api";
+const API_URL = 'http://localhost:3000/api'
 
 const config = new Configuration({
-  basePath: API_URL
-});
+  basePath: API_URL,
+})
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
-  responseType: "json"
-});
+  responseType: 'json',
+})
 
-const publicApi = new PublicApi(config, '', axiosInstance);
-
-export {
-  publicApi
-};
+export const publicApi = new PublicApi(config, '', axiosInstance)
