@@ -12,7 +12,4 @@
  * Do not edit the class manually.
  */
 
-
-
-export * from './api/public-api';
-
+export * from './api/public-api'

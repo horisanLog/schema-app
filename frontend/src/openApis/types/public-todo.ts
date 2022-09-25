@@ -12,26 +12,22 @@
  * Do not edit the class manually.
  */
 
-
-
 /**
  * Todo
  * @export
  * @interface PublicTodo
  */
 export interface PublicTodo {
-    /**
-     * 
-     * @type {number}
-     * @memberof PublicTodo
-     */
-    id: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicTodo
-     */
-    name: string;
+  /**
+   *
+   * @type {number}
+   * @memberof PublicTodo
+   */
+  id: number
+  /**
+   *
+   * @type {string}
+   * @memberof PublicTodo
+   */
+  name: string
 }
-
-

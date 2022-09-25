@@ -12,92 +12,102 @@
  * Do not edit the class manually.
  */
 
-
-import * as globalImportUrl from 'url';
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
-import { Configuration } from '../configuration';
+import * as globalImportUrl from 'url'
+import globalAxios, { AxiosPromise, AxiosInstance } from 'axios'
+import { Configuration } from '../configuration'
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base'
 
-import { PublicTodo } from '../types';
+import { PublicTodo } from '../types'
 /**
  * PublicApi - axios parameter creator
  * @export
  */
 export const PublicApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * todoを取得する
-         * @summary todoの取得
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        publicTodosGet(options: any = {}): RequestArgs {
-            const localVarPath = `/public/todos`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+  return {
+    /**
+     * todoを取得する
+     * @summary todoの取得
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    publicTodosGet(options: any = {}): RequestArgs {
+      const localVarPath = `/public/todos`
+      const localVarUrlObj = globalImportUrl.parse(localVarPath, true)
+      let baseOptions
+      if (configuration) {
+        baseOptions = configuration.baseOptions
+      }
+      const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options }
+      const localVarHeaderParameter = {} as any
+      const localVarQueryParameter = {} as any
 
+      localVarUrlObj.query = {
+        ...localVarUrlObj.query,
+        ...localVarQueryParameter,
+        ...options.query,
+      }
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers }
 
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
+      return {
+        url: globalImportUrl.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      }
+    },
+  }
+}
 
 /**
  * PublicApi - functional programming interface
  * @export
  */
-export const PublicApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * todoを取得する
-         * @summary todoの取得
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        publicTodosGet(options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublicTodo> {
-            const localVarAxiosArgs = PublicApiAxiosParamCreator(configuration).publicTodosGet(options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    }
-};
+export const PublicApiFp = function (configuration?: Configuration) {
+  return {
+    /**
+     * todoを取得する
+     * @summary todoの取得
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    publicTodosGet(
+      options?: any
+    ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublicTodo> {
+      const localVarAxiosArgs = PublicApiAxiosParamCreator(configuration).publicTodosGet(options)
+      return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+        const axiosRequestArgs = {
+          ...localVarAxiosArgs.options,
+          url: basePath + localVarAxiosArgs.url,
+        }
+        return axios.request(axiosRequestArgs)
+      }
+    },
+  }
+}
 
 /**
  * PublicApi - factory interface
  * @export
  */
-export const PublicApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    return {
-        /**
-         * todoを取得する
-         * @summary todoの取得
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        publicTodosGet(options?: any) {
-            return PublicApiFp(configuration).publicTodosGet(options)(axios, basePath);
-        },
-    };
-};
+export const PublicApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance
+) {
+  return {
+    /**
+     * todoを取得する
+     * @summary todoの取得
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    publicTodosGet(options?: any) {
+      return PublicApiFp(configuration).publicTodosGet(options)(axios, basePath)
+    },
+  }
+}
 
 /**
  * PublicApi - object-oriented interface
@@ -106,15 +116,14 @@ export const PublicApiFactory = function (configuration?: Configuration, basePat
  * @extends {BaseAPI}
  */
 export class PublicApi extends BaseAPI {
-    /**
-     * todoを取得する
-     * @summary todoの取得
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PublicApi
-     */
-    public publicTodosGet(options?: any) {
-        return PublicApiFp(this.configuration).publicTodosGet(options)(this.axios, this.basePath);
-    }
-
+  /**
+   * todoを取得する
+   * @summary todoの取得
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof PublicApi
+   */
+  public publicTodosGet(options?: any) {
+    return PublicApiFp(this.configuration).publicTodosGet(options)(this.axios, this.basePath)
+  }
 }
